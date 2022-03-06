@@ -9,6 +9,7 @@ class_names = data_set.class_names
 normalization_layer = tensorflow.keras.layers.Rescaling(1./255)
 model = tensorflow.keras.Sequential([
   tensorflow.keras.layers.Rescaling(1./255),
+  tensorflow.keras.layers.Resizing(256, 256),
   tensorflow.keras.layers.Conv2D(32, 3, activation='relu'),
   tensorflow.keras.layers.MaxPooling2D(),
   tensorflow.keras.layers.Conv2D(32, 3, activation='relu'),

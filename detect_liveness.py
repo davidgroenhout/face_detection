@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
+import argparse
 import cv2
 import numpy
 
-
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '--detect_model', type=str, default='./opencv_face_detector_uint8.pb')
+parser.add_argument(
+    '--detect_config', type=str, default='./opencv_face_detector.pbtxt')
+parser.add_argument('--liveness_model', type=str, default='./liveness.pb')
+parser.add_argument('--offset', type=float, default=0.0)
+args = parser.parse_args()
+detect_model = args.detect_model
+detect_config = args.detect_config
+liveness_model = args.liveness_model
 video = cv2.VideoCapture(0)
-detect_model = './opencv_face_detector_uint8.pb'
-detect_config = './opencv_face_detector.pbtxt'
-liveness_model = './liveness.pb'
 detect_net = cv2.dnn.readNet(detect_model, detect_config)
 liveness_net = cv2.dnn.readNet(liveness_model)
 
