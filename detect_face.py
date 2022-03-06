@@ -14,10 +14,11 @@ while True:
         blob = cv2.dnn.blobFromImage(frame, 1, (300, 300), (104, 177, 123))
         net.setInput(blob)
         output = net.forward()
-        prob = output[0, 0, 0, 2]
+        best = numpy.argmax(output[0, 0, :, 2])
+        prob = output[0, 0, best, 2]
         colour = (0, 0, 255) if prob < 0.9 else (0, 255, 0)
         (x1, y1, x2, y2) = (
-            output[0, 0, 0, 3:7] * numpy.array([w, h, w, h])
+            output[0, 0, best, 3:7] * numpy.array([w, h, w, h])
             ).astype('int')
         cv2.rectangle(frame, (x1, y1), (x2, y2), colour)
         cv2.putText(frame, prob.astype('str'), (x1, y1 - 10),
